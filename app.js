@@ -1,4 +1,4 @@
-// Two Versions of API 
+// Two Versions of API
 // (First api has total quotes in single json file & we need to manually randomize & display them)
 // (Second api generates 1 random quote, no need to manually randomize)
 
@@ -11,11 +11,11 @@
 // // API
 // const api_url = 'https://type.fit/api/quotes'
 
-// async function get_data_from_api(api_url) { 
+// async function get_data_from_api(api_url) {
 //     // data
-//     const response = await fetch(api_url); 
+//     const response = await fetch(api_url);
 //     var data = await response.json();
-    
+
 //     const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 //     const dataNum = random(0,data.length)
 //     console.log(data[dataNum])
@@ -27,26 +27,26 @@
 // // get_data_from_api(api_url)
 // window.addEventListener('load', get_data_from_api(api_url))
 
-
 // Code for Second API
 // Selector
-const quoteText = document.getElementById('quoteText')
-const quoteAuthor = document.getElementById('quoteAuthor')
+const quoteText = document.getElementById("quoteText");
+const quoteAuthor = document.getElementById("quoteAuthor");
 // API
-const api_url = 'https://api.quotable.io/random'
+const api_url = "https://api.quotable.io/random";
 
-async function get_data_from_api(api_url) { 
+async function get_data_from_api(api_url) {
     // data
-    const response = await fetch(api_url); 
+    const response = await fetch(api_url);
     var data = await response.json();
 
-    console.log(data)
-
-    quoteText.innerHTML =`${data.content}`
-    quoteAuthor.innerHTML =`${data.author}`
-    setTimeout(() => get_data_from_api(api_url), 60000)
-    
+    if (response.status == 200) { // Check the status of response & only execute
+        quoteText.innerHTML = `${data.content}`;
+        quoteAuthor.innerHTML = `${data.author}`;
+        setTimeout(() => get_data_from_api(api_url), 60000);
+    } else {
+        confirm("The API isn't working properly, please wait for a moment or try reloading ! ")
+    }
 }
 
 // get_data_from_api(api_url)
-window.addEventListener('load', get_data_from_api(api_url))
+window.addEventListener("load", get_data_from_api(api_url));
